@@ -1,0 +1,1 @@
+import ('./bootstrap'); // This is a dynamic import that will load the bootstrap.js file asynchronously. The comment indicates that this line is important for the application to function correctly, as it initializes the necessary configurations and setups for the application to run.
