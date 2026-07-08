@@ -5,7 +5,11 @@ export default () => {
     const ref = useRef(null);
 
     useEffect(() => {
-        mount(ref.current); // call the mount function from the MarketingApp and pass the ref to it
+        mount(ref.current, {
+            onNavigate: () => {
+                console.log('Container just navigated in MarketingApp');
+            }
+        }); // call the mount function from the MarketingApp and pass the ref to it
     }, []);
 
     return <div ref={ref}></div>;
