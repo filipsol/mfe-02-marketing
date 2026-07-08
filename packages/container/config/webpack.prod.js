@@ -9,6 +9,9 @@ const normalizedDomain = rawDomain.replace(/\/$/, '');
 const marketingRemoteUrl = normalizedDomain
   ? `${normalizedDomain}/marketing/latest/remoteEntry.js`
   : '/marketing/latest/remoteEntry.js';
+  const authRemoteUrl = normalizedDomain
+  ? `${normalizedDomain}/auth/latest/remoteEntry.js`
+  : '/auth/latest/remoteEntry.js';
 
 const prodConfig = {
   mode: 'production',
@@ -21,6 +24,7 @@ const prodConfig = {
         name: 'container',
         remotes: {
             marketing: `marketing@${marketingRemoteUrl}`,
+            auth: `auth@${authRemoteUrl}`,
         },
         shared: packageJson.dependencies,
     })
