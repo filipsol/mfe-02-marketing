@@ -3,7 +3,12 @@ const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPl
 const commonConfig = require('./webpack.common');
 const packageJson = require('../package.json');
 
-const domain = process.env.PRODUCTION_DOMAIN; // Set the production domain from environment variable
+// Normalize production domain and avoid generating "undefined/..." URLs in CI builds.
+const rawDomain = process.env.PRODUCTION_DOMAIN || '';
+const normalizedDomain = rawDomain.replace(/\/$/, '');
+const marketingRemoteUrl = normalizedDomain
+  ? `${normalizedDomain}/marketing/latest/remoteEntry.js`
+  : '/marketing/latest/remoteEntry.js';
 
 const prodConfig = {
   mode: 'production',
@@ -15,7 +20,7 @@ const prodConfig = {
     new ModuleFederationPlugin({
         name: 'container',
         remotes: {
-            marketing: `marketing@${domain}/marketing/latest/remoteEntry.js`,
+            marketing: `marketing@${marketingRemoteUrl}`,
         },
         shared: packageJson.dependencies,
     })
