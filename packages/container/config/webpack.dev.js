@@ -19,7 +19,8 @@ const devConfig = {
         new ModuleFederationPlugin({
             name: 'container',
             remotes: {
-                marketing: 'marketing@http://localhost:8081/remoteEntry.js'
+                marketing: 'marketing@http://localhost:8081/remoteEntry.js',
+                auth: 'auth@http://localhost:8082/remoteEntry.js'
             },
             // shared: ['react', 'react-dom'] // share react and react-dom as singletons to avoid multiple versions
             shared: packageJson.dependencies // share all dependencies from package.json to avoid multiple versions
