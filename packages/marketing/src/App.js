@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, MemoryRouter, Route, Switch } from "react-router-dom";
-import { StylesProvider } from "@material-ui/core/styles";
+import { StylesProvider, createGenerateClassName } from "@material-ui/core/styles";
 
 import Landing from "./components/Landing";
 import Pricing from "./components/Pricing";
@@ -10,9 +10,13 @@ export default () => {
     const isStandaloneMarketingPath = path.startsWith('/marketing/latest') || path === '/';
     const Router = isStandaloneMarketingPath ? BrowserRouter : MemoryRouter;
 
+    const generateClassName = createGenerateClassName({
+        productionPrefix: 'ma',
+    });
+
     return (
         <div>
-            <StylesProvider>
+            <StylesProvider generateClassName={generateClassName}>
                 <Router>
                     <Switch>
                         <Route path="/pricing" component={Pricing} />
