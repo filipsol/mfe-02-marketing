@@ -1,4 +1,4 @@
-const {merge} = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 const commonConfig = require('./webpack.common');
 const packageJson = require('../package.json');
@@ -9,9 +9,12 @@ const normalizedDomain = rawDomain.replace(/\/$/, '');
 const marketingRemoteUrl = normalizedDomain
   ? `${normalizedDomain}/marketing/latest/remoteEntry.js`
   : '/marketing/latest/remoteEntry.js';
-  const authRemoteUrl = normalizedDomain
+const authRemoteUrl = normalizedDomain
   ? `${normalizedDomain}/auth/latest/remoteEntry.js`
   : '/auth/latest/remoteEntry.js';
+const dashboardRemoteUrl = normalizedDomain
+  ? `${normalizedDomain}/dashboard/latest/remoteEntry.js`
+  : '/dashboard/latest/remoteEntry.js';
 
 const prodConfig = {
   mode: 'production',
@@ -21,12 +24,13 @@ const prodConfig = {
   },
   plugins: [
     new ModuleFederationPlugin({
-        name: 'container',
-        remotes: {
-            marketing: `marketing@${marketingRemoteUrl}`,
-            auth: `auth@${authRemoteUrl}`,
-        },
-        shared: packageJson.dependencies,
+      name: 'container',
+      remotes: {
+        marketing: `marketing@${marketingRemoteUrl}`,
+        auth: `auth@${authRemoteUrl}`,
+        dashboard: `dashboard@${dashboardRemoteUrl}`, // add the dashboard remote
+      },
+      shared: packageJson.dependencies,
     })
   ]
 };
