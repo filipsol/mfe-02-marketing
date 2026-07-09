@@ -2,7 +2,7 @@ import { mount } from 'auth/AuthApp';
 import React, { useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
-export default () => {
+export default ({ onSignIn }) => {
     const ref = useRef(null);
     const history = useHistory();
 
@@ -18,6 +18,7 @@ export default () => {
             },
             onSignIn: () => {
                 console.log('User Sigined In');
+                onSignIn();
             },// call the mount function from the MarketingApp and pass the ref to it
         });
         history.listen(onParentNavigate); // listen for navigation events in the container and call the onParentNavigate function from the MarketingApp
