@@ -15,8 +15,11 @@ export default () => {
                 if (pathname !== nextPathname) {
                     history.push(nextPathname); // update the container's history to match the marketing app's navigation
                 }
-            }
-        }); // call the mount function from the MarketingApp and pass the ref to it
+            },
+            onSignIn: () => {
+                console.log('User Sigined In');
+            },// call the mount function from the MarketingApp and pass the ref to it
+        });
         history.listen(onParentNavigate); // listen for navigation events in the container and call the onParentNavigate function from the MarketingApp
     }, []);
 

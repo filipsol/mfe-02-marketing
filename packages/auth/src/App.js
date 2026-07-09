@@ -1,12 +1,12 @@
 import React from "react";
-import {Route, Switch, Router } from "react-router-dom";
+import { Route, Switch, Router } from "react-router-dom";
 import { StylesProvider, createGenerateClassName } from "@material-ui/core/styles";
 
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
 
 
-export default ({ history }) => {
+export default ({ onSignIn, history }) => {
 
 
     const generateClassName = createGenerateClassName({
@@ -18,8 +18,12 @@ export default ({ history }) => {
             <StylesProvider generateClassName={generateClassName}>
                 <Router history={history}>
                     <Switch>
-                        <Route path="/auth/signin" component={SignIn} />
-                        <Route path="/auth/signup" component={SignUp} />
+                        <Route path="/auth/signin">
+                            <SignIn onSignIn={onSignIn} />
+                        </Route>
+                        <Route path="/auth/signup">
+                            <SignUp onSignIn={onSignIn} />
+                        </Route>
                     </Switch>
                 </Router>
             </StylesProvider>
