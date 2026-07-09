@@ -2,8 +2,8 @@ import React from "react";
 import { Route, Switch, Router } from "react-router-dom";
 import { StylesProvider, createGenerateClassName } from "@material-ui/core/styles";
 
-import SignIn from "./components/SignIn";
-import SignUp from "./components/SignUp";
+import SignIn from "./components/Signin";
+import SignUp from "./components/Signup";
 
 
 export default ({ onSignIn, history }) => {
