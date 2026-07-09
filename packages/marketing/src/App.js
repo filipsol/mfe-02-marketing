@@ -14,6 +14,7 @@ export default ({ history }) => {
         productionPrefix: 'ma',
     });
 
+    
     return (
         <div>
             <StylesProvider generateClassName={generateClassName}>
