@@ -1,6 +1,7 @@
-import React, { lazy, Suspense, useState } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import React, { lazy, Suspense, useState, useEffect } from 'react';
+import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import { StylesProvider, createGenerateClassName } from '@material-ui/core/styles';
+import { createBrowserHistory } from 'history';
 // import { mount } from 'marketing/MarketingApp'; // import the mount function from the MarketingApp exposed by the marketing microfrontend
 // console.log(mount);
 // import MarketingApp from './components/MarketingApp'; // import the MarketingApp component
@@ -16,12 +17,19 @@ const generateClassName = createGenerateClassName({
     productionPrefix: 'co',
 });
 
+const history = createBrowserHistory(); // create a browser history object
+
 export default () => {
-    
     const [isSignedIn, setIsSignedIn] = useState(false);
 
+    useEffect(() => {
+        if (isSignedIn) {
+            history.push('/dashboard'); // navigate to the dashboard route when the user is signed in
+        }
+    }, [isSignedIn]);
+
     return (
-        <BrowserRouter>
+        <Router history={history}>
             <StylesProvider generateClassName={generateClassName}>
                 <div>
                     <Header isSignedIn={isSignedIn} onSignOut={() => setIsSignedIn(false)} />
@@ -30,13 +38,16 @@ export default () => {
                             <Route path="/auth">
                                 <AuthLazy onSignIn={() => setIsSignedIn(true)} />
                             </Route>
-                            <Route path="/dashboard" component={DashboardLazy} />
+                            <Route path="/dashboard">
+                                {!isSignedIn && <Redirect to="/" />} 
+                                <DashboardLazy />
+                            </Route>
                             <Route path="/" component={MarketingLazy} />
                         </Switch>
                     </Suspense>
                 </div>
             </StylesProvider>
-        </BrowserRouter>
+        </Router>
 
     );
 }
